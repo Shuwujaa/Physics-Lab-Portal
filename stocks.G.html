@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Physics Lab Stock - PGC</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Oswald', sans-serif;
+      background: linear-gradient(to bottom right, #2c2b6f 20%, #2c2b6f 80%);
+      margin: 0;
+      padding: 20px;
+      color: white;
+    }
+
+    h2, h3 {
+      text-align: center;
+      margin: 0;
+      font-family: 'Oswald', sans-serif;
+      color: white;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .pdf-btn {
+      display: block;
+      margin: 0 auto 20px;
+      padding: 10px 30px;
+      background: #2c2b6f;
+      color: white;
+      border: 2px solid #e13a27;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .pdf-btn:hover {
+      background: #2c2b6f;
+      border-color: #2c2b6f;
+    }
+
+    #table-container {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      color: #2c2b6f;
+    }
+
+    th {
+      background: linear-gradient(#2c2b6f, #2c2b6f);
+      color: white;
+      padding: 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      background: #fdfdfd;
+    }
+
+    .category-row td {
+      background: #2c2b6f;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    .image-banner-placeholder {
+      width: 100%;
+      height: 120px;
+      border: 3px dashed #e13a27;
+      border-radius: 12px;
+      background-color: #fff;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e13a27;
+      font-size: 16px;
+      font-style: italic;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      height: 80px;
+      margin-right: 15px;
+    }
+
+    .popup {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      background: #fff;
+      border: 2px solid #2c2b6f;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+      padding: 15px;
+      z-index: 999;
+      border-radius: 15px;
+      animation: fadeIn 0.2s ease-in-out;
+      width: 260px;
+    }
+
+    .popup button {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      background-color: #2c2b6f;
+      color: #fff;
+      border: none;
+      margin: 8px 0;
+      padding: 12px 14px;
+      cursor: pointer;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .popup button img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .popup button:hover {
+      background-color: #e13a27;
+      transform: scale(1.03);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-container">
+    <img src="logo.svg" alt="PGC Logo" class="logo">
+  </div>
+  <div class="strip">
+    <img src="Stip.png" alt="Strip">
+  </div>
+  <div class="strip">
+    <img src="STRIP.png" alt="Strip">
+  </div>
+  <div class="banner-image">
+    <img src="girls.png" alt="Lab Banner" class="wide-banner">
+  </div>
+  <button class="pdf-btn" onclick="downloadPDF()">Download as PDF</button>
+  <button class="pdf-btn" onclick="showCategoryOptions()">➕ Add New Row</button>
+  <div id="category-popup" class="popup hidden">
+    <button onclick="addRowToCategory('⚙️ Measuring Instruments')">
+      <img src="measuring.png" alt="Measuring"> Measuring Instruments
+    </button>
+    <button onclick="addRowToCategory('🔌 Electrical Equipment')">
+      <img src="electrial.png" alt="Electrical"> Electrical Equipment
+    </button>
+    <button onclick="addRowToCategory('🧪 Experimental Apparatus')">
+      <img src="apratus.png" alt="Experimental"> Experimental Apparatus
+    </button>
+    <button onclick="addRowToCategory('🔧 Tools & Miscellaneous')">
+      <img src="toolss.png" alt="Tools"> Tools & Miscellaneous
+    </button>
+  </div>
+  <div id="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Sr #</th>
+          <th>Description of Assets</th>
+          <th>Quantity</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="category-row"><td colspan="4">⚙️ Measuring Instruments</td></tr>
+        <tr><td>1</td><td>Vernier Calipers China</td><td contenteditable="true">41</td><td contenteditable="true"></td></tr>
+        <tr><td>2</td><td>Micrometer Screw Gauge</td><td contenteditable="true">35</td><td contenteditable="true"></td></tr>
+        <tr><td>3</td><td>Micro Ammeter China</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>4</td><td>Mille Ammeter China</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>5</td><td>Galvanometer China</td><td contenteditable="true">22</td><td contenteditable="true"></td></tr>
+        <tr><td>6</td><td>Stop Watch</td><td contenteditable="true">27</td><td contenteditable="true"></td></tr>
+        <tr><td>7</td><td>Resistance Boxes (1-500 Ohms)</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>8</td><td>Resistance Boxes (1-10000 Ohms)</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>9</td><td>Single Key or One Way Key</td><td contenteditable="true">39</td><td contenteditable="true"></td></tr>
+        <tr><td>10</td><td>Two Way Key</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>11</td><td>Potentiometer</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>12</td><td>Multimeter Model MF-47</td><td contenteditable="true">2</td><td contenteditable="true"></td></tr>
+        <tr><td>13</td><td>Multimeter Model YX-360T-R-E-L -B</td><td contenteditable="true">4</td><td contenteditable="true"></td></tr>
+        <tr><td>14</td><td>AVO Meter Digital</td><td contenteditable="true">4</td><td contenteditable="true"></td></tr>
+        <tr><td>15</td><td>AVO Meter Analog</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr class="category-row"><td colspan="4">🧪 Experimental Apparatus</td></tr>
+        <tr><td>16</td><td>Grave Sand Apparatus</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>17</td><td>Free Fall by Electronic Timer</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>18</td><td>Tungsten Filament Apparatus</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>19</td><td>Semi Conductor Diode Apparatus</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>20</td><td>Logic Gate Apparatus</td><td contenteditable="true">14</td><td contenteditable="true"></td></tr>
+        <tr><td>21</td><td>Neon Flash Lamp</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>22</td><td>Capacitance in A.C Circuits Apparatus</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>23</td><td>Photo Cell Apparatus</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr class="category-row"><td colspan="4">🔌 Electrical Equipment</td></tr>
+        <tr><td>24</td><td>Electric Balance 2000g = 2kg</td><td contenteditable="true">1</td><td contenteditable="true"></td></tr>
+        <tr><td>25</td><td>Power Supply Regular</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>26</td><td>Digital Power Supply (0-15V 1.5A)</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>27</td><td>Single Cell Box</td><td contenteditable="true">20</td><td contenteditable="true"></td></tr>
+        <tr><td>28</td><td>Single Cell Box</td><td contenteditable="true">15</td><td contenteditable="true"></td></tr>
+        <tr><td>29</td><td>Fire Alarms</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>30</td><td>Burglar Alarms</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>31</td><td>Bulb 100W</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+        <tr class="category-row"><td colspan="4">🔧 Tools & Miscellaneous</td></tr>
+        <tr><td>32</td><td>Index Needle Apparatus</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>33</td><td>Bob</td><td contenteditable="true">30 set</td><td contenteditable="true"></td></tr>
+        <tr><td>34</td><td>Drawing Boards</td><td contenteditable="true">20</td><td contenteditable="true"></td></tr>
+        <tr><td>35</td><td>Drawing Boards</td><td contenteditable="true">30</td><td contenteditable="true"></td></tr>
+        <tr><td>36</td><td>Iron Stand with Clamps</td><td contenteditable="true">18</td><td contenteditable="true"></td></tr>
+        <tr><td>37</td><td>Jockey Best Quality</td><td contenteditable="true">22</td><td contenteditable="true"></td></tr>
+        <tr><td>38</td><td>Pliers</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+        <tr><td>39</td><td>Needles</td><td contenteditable="true">15</td><td contenteditable="true"></td></tr>
+        <tr><td>40</td><td>Rubber Mat</td><td contenteditable="true">4</td><td contenteditable="true"></td></tr>
+        <tr><td>41</td><td>Slotted Weight Half Kg</td><td contenteditable="true">16 set</td><td contenteditable="true"></td></tr>
+        <tr><td>42</td><td>Weight Box Pakistan</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>43</td><td>Thumb Pin</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>44</td><td>Office Pin</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>45</td><td>Sand Papers</td><td contenteditable="true">4 paper</td><td contenteditable="true"></td></tr>
+        <tr><td>46</td><td>Rubber Pad</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>47</td><td>Rubber Corks</td><td contenteditable="true">30</td><td contenteditable="true"></td></tr>
+        <tr><td>48</td><td>Spring Balance</td><td contenteditable="true">24</td><td contenteditable="true"></td></tr>
+        <tr><td>49</td><td>Jockey Best Quality</td><td contenteditable="true">22</td><td contenteditable="true"></td></tr>
+        <tr><td>50</td><td>Glass Strips</td><td contenteditable="true">24</td><td contenteditable="true"></td></tr>
+        <tr><td>51</td><td>Screw Driver</td><td contenteditable="true">1 set</td><td contenteditable="true"></td></tr>
+        <tr><td>52</td><td>Iron Ball</td><td contenteditable="true">1 box</td><td contenteditable="true"></td></tr>
+        <tr class="category-row"><td colspan="4">🔭 Optical Instruments</td></tr>
+        <tr><td>53</td><td>Convex Lens</td><td contenteditable="true">34</td><td contenteditable="true"></td></tr>
+        <tr><td>54</td><td>Concave Lens</td><td contenteditable="true">29</td><td contenteditable="true"></td></tr>
+        <tr><td>55</td><td>Concave Mirror</td><td contenteditable="true">24</td><td contenteditable="true"></td></tr>
+        <tr><td>56</td><td>Meter Rod</td><td contenteditable="true">30</td><td contenteditable="true"></td></tr>
+        <tr><td>57</td><td>Solid Cylinder</td><td contenteditable="true">25</td><td contenteditable="true"></td></tr>
+        <tr><td>58</td><td>Prism</td><td contenteditable="true">45</td><td contenteditable="true"></td></tr>
+        <tr><td>59</td><td>Upright with Needles Complete App</td><td contenteditable="true">40 pcs</td><td contenteditable="true"></td></tr>
+        <tr class="category-row"><td colspan="4">🔔 Sound & Tuning</td></tr>
+        <tr><td>60</td><td>Tuning Forks Silver 480</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>61</td><td>512 Silver</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>62</td><td>256 Silver</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>63</td><td>384 Silver</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>64</td><td>480 Black Germany</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>65</td><td>256 Black Germany</td><td contenteditable="true">5</td><td contenteditable="true"></td></tr>
+        <tr><td>66</td><td>512 Black Germany</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>67</td><td>384 Black Germany</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>68</td><td>Melde’s Apparatus</td><td contenteditable="true">7</td><td contenteditable="true"></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    async function downloadPDF() {
+      const element = document.getElementById('table-container');
+      const opt = {
+        margin: [20, 20, 20, 20],
+        filename: 'PGC_PhysicsLab_Stock_July2025.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 1.5, useCORS: true },
+        jsPDF: { unit: 'pt', format: 'a2', orientation: 'landscape' },
+        pagebreak: { mode: ['css', 'legacy'], before: '.category-row' }
+      };
+      html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+        if (totalPages > 2) {
+          const scaleFactor = Math.sqrt(2 / totalPages);
+          opt.html2canvas.scale *= scaleFactor;
+          html2pdf().set(opt).from(element).save();
+        } else {
+          html2pdf().set(opt).from(element).save();
+        }
+      });
+    }
+
+    function showCategoryOptions() {
+      const popup = document.getElementById("category-popup");
+      popup.classList.toggle("hidden");
+    }
+
+    function addRowToCategory(categoryName) {
+      const table = document.querySelector("#table-container table tbody");
+      const rows = Array.from(table.rows);
+      let insertIndex = -1;
+
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i].classList.contains("category-row") &&
+            rows[i].cells[0].textContent.trim() === categoryName) {
+          insertIndex = i + 1;
+          while (insertIndex < rows.length && !rows[insertIndex].classList.contains("category-row")) {
+            insertIndex++;
+          }
+          break;
+        }
+      }
+
+      if (insertIndex === -1) {
+        alert("Category not found!");
+        return;
+      }
+
+      const newRow = document.createElement("tr");
+      newRow.innerHTML = `
+        <td></td>
+        <td contenteditable="true">New Asset</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      `;
+
+      if (insertIndex >= rows.length) {
+        table.appendChild(newRow);
+      } else {
+        table.insertBefore(newRow, rows[insertIndex]);
+      }
+
+      updateRowNumbers();
+      hidePopup();
+    }
+
+    function updateRowNumbers() {
+      const table = document.querySelector("#table-container table tbody");
+      let count = 1;
+      for (const row of table.rows) {
+        if (!row.classList.contains("category-row")) {
+          row.cells[0].textContent = count++;
+        }
+      }
+    }
+
+    function hidePopup() {
+      document.getElementById("category-popup").classList.add("hidden");
+    }
+
+    document.addEventListener("click", (e) => {
+      const popup = document.getElementById("category-popup");
+      if (!popup.contains(e.target) && e.target.innerText !== "➕ Add New Row") {
+        popup.classList.add("hidden");
+      }
+    });
+  </script>
+</body>
+</html>

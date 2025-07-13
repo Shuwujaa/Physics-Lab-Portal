@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physics Lab Portal - PGC</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <style>
+        /* CSS Variables - Updated to PGC's exact brand colors */
+        :root {
+            --pgc-primary-blue: #2c2b6f; /* PGC Blue */
+            --pgc-secondary-red: #e13a27; /* PGC Red */
+            --bg-light: #F8F9FA; /* Keeping for light mode switch, but default will be blue */
+            --bg-dark-sidebar: #1f1e4d; /* Slightly darker blue derived from PGC Blue for sidebar contrast */
+            --glass-bg: rgba(255, 255, 255, 0.08); /* For glassmorphism effects (if any) */
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-primary: #FFFFFF; /* Changed to white for blue background */
+            --text-secondary: #d0d0d0; /* Lighter white for secondary text */
+            --light-border: rgba(255, 255, 255, 0.15); /* Light border color for contrast on blue */
+            --shadow-subtle: rgba(0, 0, 0, 0.08); /* Subtle shadow */
+            --shadow-medium: rgba(0, 0, 0, 0.15); /* Medium shadow */
+            --white: #FFFFFF;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%; /* Ensure full height for patterns if needed */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--pgc-primary-blue); /* ALL BG IS PGC BLUE */
+            color: var(--text-primary); /* Default text color is white on blue */
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 260px;
+            background: var(--pgc-primary-blue); /* PGC's primary blue */
+            border-right: 1px solid rgba(255, 255, 255, 0.1); /* Lighter border for contrast */
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px var(--shadow-medium);
+        }
+
+        #sidebar.collapsed {
+            width: 80px;
+        }
+
+        #sidebar-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Lighter border for contrast */
+            color: var(--white); /* Text in sidebar header */
+        }
+
+        #sidebar-logo img {
+            height: 3rem; /* Adjust to PGC logo size */
+            transition: transform 0.3s ease;
+            filter: brightness(0) invert(1); /* Makes logo white for dark background, adjust if your logo is already white */
+        }
+
+        #sidebar.collapsed #sidebar-logo img {
+            transform: scale(0.8);
+        }
+
+        #toggle-sidebar {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        #toggle-sidebar img {
+            width: 1.5rem;
+            height: 1.5rem;
+            transition: transform 0.3s ease;
+            filter: brightness(0) invert(1); /* Makes hamburger icon white */
+        }
+
+        #toggle-sidebar:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Navigation Items */
+        nav {
+            flex-grow: 1;
+            padding: 0.5rem 0;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            color: var(--white); /* White text for sidebar nav items */
+            text-decoration: none;
+            font-weight: 400;
+            margin: 0.25rem 0.75rem;
+            border-radius: 6px;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease;
+            position: relative;
+            overflow: hidden; /* For the slide-in effect */
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1); /* Subtle white overlay on hover */
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-item:hover::before {
+            left: 0;
+        }
+
+        .nav-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px var(--shadow-subtle);
+            color: var(--white); /* Ensure text stays white on hover */
+        }
+
+        .nav-item img {
+            width: 1.75rem;
+            height: 1.75rem;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+            filter: brightness(0) invert(1); /* Makes nav icons white */
+        }
+
+        .nav-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .nav-item.active {
+            background: var(--pgc-secondary-red); /* PGC's accent red for active item */
+            font-weight: 600;
+            color: var(--white);
+            box-shadow: 0 4px 12px var(--shadow-medium);
+            transform: translateX(0);
+        }
+
+        .nav-item.active::before {
+            background: none;
+        }
+
+        .nav-item.active img {
+            filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            left: 80px;
+            background: var(--pgc-primary-blue); /* Tooltip background matches PGC blue */
+            color: var(--white);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform: translateX(10px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .nav-item:hover .tooltip {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        #sidebar.collapsed .nav-text {
+            display: none;
+        }
+
+        /* Main Content */
+        #main-content {
+            flex-grow: 1;
+            margin-left: 260px;
+            transition: margin-left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure it covers full height */
+            background-color: var(--pgc-primary-blue); /* Main background is PGC Blue */
+            color: var(--text-primary);
+        }
+
+        #sidebar.collapsed + #main-content {
+            margin-left: 80px;
+        }
+
+        /* Header (now for the main portal title area) */
+        #main-header {
+            background: var(--pgc-primary-blue); /* Header background is PGC blue */
+            color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px var(--shadow-medium);
+            height: 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #main-header #breadcrumb span,
+        #main-header #current-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        #main-header #breadcrumb #current-page {
+            color: var(--pgc-secondary-red);
+        }
+
+        /* Physics Portal Title Banner */
+        .physics-portal-banner {
+            width: 100%;
+            height: auto; /* Adjust height based on image content */
+            min-height: 120px; /* Minimum height for the banner */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            background-color: var(--pgc-primary-blue); /* Ensure background is PGC blue */
+        }
+
+        .physics-portal-banner img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Remove extra space below image */
+            object-fit: contain; /* Ensure image scales within its container */
+        }
+
+
+        /* College Address Stip */
+        .college-address-stip {
+            width: 100%;
+            height: auto; /* Adjust height based on image content */
+            min-height: 60px; /* Minimum height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--pgc-primary-blue); /* Ensure background is PGC blue */
+            padding: 1rem; /* Add some padding */
+            margin-bottom: 0; /* No margin below if directly above divider */
+        }
+
+        .college-address-stip img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* PGC Section Divider (for img-shape04.webp) */
+        .pgc-section-divider {
+            width: 100%;
+            height: 100px; /* Adjust height as needed to fit the pattern */
+            background: url('img-shape04.webp') no-repeat center center;
+            background-size: cover; /* Cover the entire area */
+            margin: 0; /* Removed margin-top, combined with stip's padding */
+            margin-bottom: 2rem; /* Add margin below the divider */
+            z-index: 10;
+        }
+
+        /* Page Container - Content Cards are now on a blue background */
+        #page-container {
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            background-color: var(--pgc-primary-blue); /* Ensure background is PGC blue */
+        }
+
+        #page-container.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Adjusted .page-content for the "About Portal" card style */
+        .page-content {
+            background: var(--white); /* White background for content cards */
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow-subtle);
+            border-left: 5px solid var(--pgc-secondary-red); /* PGC red accent on left for contrast */
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            color: #343A40; /* Ensure text is dark on white cards */
+        }
+
+        .page-content:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px var(--shadow-medium);
+        }
+
+        /* Specific styles for the "About Portal" card to mimic "WE GOT VISION" */
+        #about-portal-card {
+            background-color: var(--pgc-primary-blue); /* Blue background for this specific card */
+            color: var(--white); /* White text for this card */
+            border-left: none; /* No red border if full blue */
+            box-shadow: none; /* No shadow as it blends with main background */
+            min-height: 400px; /* Ensure enough height for content */
+            grid-column: 1 / -1; /* Make this card span all columns */
+            padding: 3rem 4rem; /* More padding for a grander feel */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #about-portal-card h2 {
+            font-size: 3.5rem; /* Larger font size for main heading */
+            font-weight: 900; /* Extra bold */
+            margin-bottom: 0.5rem;
+            color: var(--white); /* White for "WE GOT" part */
+            line-height: 1; /* Tighter line height */
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* Subtle shadow for depth */
+        }
+        #about-portal-card h2 span {
+            color: var(--pgc-secondary-red); /* Red for "VISION" part */
+        }
+
+        #about-portal-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--white); /* White text */
+            max-width: 70%; /* Constrain width for readability */
+        }
+
+        #about-portal-card .chairman-signature {
+            font-style: italic;
+            font-weight: 500;
+            color: var(--pgc-secondary-red); /* Red for signature */
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+
+        .page-content h2 { /* This applies to all other white cards */
+            color: var(--pgc-primary-blue); /* PGC blue for headings on white cards */
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .page-content p { /* This applies to all other white cards */
+            color: var(--text-primary); /* Ensure paragraph text is dark on white cards */
+            margin-bottom: 1rem;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            background: var(--pgc-secondary-red); /* PGC red for buttons */
+            color: var(--white);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            width: fit-content;
+        }
+
+        .action-btn:hover {
+            background: #c73322; /* Slightly darker red on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-btn:focus {
+            outline: 3px solid var(--pgc-secondary-red);
+            outline-offset: 2px;
+        }
+
+        /* Logout Button */
+        #logout {
+            background: var(--bg-dark-sidebar); /* Darker shade of blue for logout */
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #logout:hover {
+            background: var(--pgc-secondary-red); /* Red on logout hover */
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #logout img {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 0.75rem;
+            transition: transform 0.3s ease;
+            filter: brightness(0) invert(1); /* Make logout icon white */
+        }
+
+        #logout:hover img {
+            transform: rotate(10deg);
+        }
+
+        /* Utility Classes */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-1 { flex: 1; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+        .p-4 { padding: 1rem; }
+        .p-2 { padding: 0.5rem; }
+        .ml-4 { margin-left: 1rem; }
+        .space-x-4 > *:not(:last-child) { margin-right: 1rem; }
+        .w-6 { width: 1.5rem; }
+        .h-6 { height: 1.5rem; }
+        .h-12 { height: 3rem; }
+        .w-full { width: 100%; }
+        .text-sm { font-size: 0.875rem; }
+        .hidden { display: none !important; }
+        .mt-4 { margin-top: 1rem; }
+        .gap-2 { gap: 0.5rem; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--light-border);
+                flex-direction: row;
+                justify-content: flex-start;
+                padding: 0.5rem 0;
+                overflow-x: auto;
+                white-space: nowrap;
+                box-shadow: none; /* No shadow on mobile sidebar */
+            }
+
+            #sidebar.collapsed {
+                width: 100%;
+            }
+
+            #sidebar-header {
+                display: none; /* Hide header on small screens */
+            }
+
+            .nav-item {
+                flex-direction: row;
+                padding: 0.75rem 0.5rem;
+                margin: 0 0.25rem;
+                text-align: center;
+                min-width: fit-content; /* Ensure items don't wrap text */
+            }
+
+            .nav-item img {
+                margin-right: 0.5rem;
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            .nav-text {
+                font-size: 0.8rem;
+            }
+
+            #sidebar.collapsed .nav-text {
+                display: inline; /* Text remains visible on collapsed mobile sidebar */
+            }
+
+            .tooltip {
+                display: none !important; /* Hide tooltips on mobile */
+            }
+
+            #main-content {
+                margin-left: 0;
+                margin-top: 60px; /* Adjust for fixed header */
+            }
+
+            #main-header {
+                padding: 0.75rem 1rem;
+                height: 50px;
+            }
+
+            .physics-portal-banner, .college-address-stip {
+                min-height: 80px; /* Adjust banner height for mobile */
+                padding: 1rem 0.5rem;
+            }
+            .physics-portal-banner img, .college-address-stip img {
+                max-width: 90%;
+            }
+
+            .pgc-section-divider {
+                height: 60px; /* Adjust for mobile */
+                margin: 0; /* Remove vertical margin for mobile to be compact */
+                margin-bottom: 1rem;
+            }
+
+            #page-container {
+                padding: 1rem;
+                grid-template-columns: 1fr;
+            }
+
+            #about-portal-card {
+                padding: 2rem 1.5rem; /* Adjust padding for mobile */
+                min-height: auto; /* Allow height to adjust */
+            }
+            #about-portal-card h2 {
+                font-size: 2.5rem;
+            }
+            #about-portal-card p {
+                font-size: 0.9rem;
+                max-width: 100%; /* Full width on mobile */
+            }
+
+            .page-content {
+                padding: 1rem;
+                min-height: 150px;
+            }
+
+            #logout {
+                margin: 0.5rem;
+                padding: 0.75rem;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #sidebar {
+                padding: 0.25rem 0;
+            }
+
+            .nav-item {
+                padding: 0.5rem 0.25rem;
+                margin: 0 0.1rem;
+            }
+
+            .nav-item img {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+
+            .nav-text {
+                font-size: 0.7rem;
+            }
+
+            #current-time {
+                display: none; /* Hide time on very small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-wrapper" class="flex flex-col">
+        <aside id="sidebar">
+            <div id="sidebar-header">
+                <div id="sidebar-logo">
+                    <img src="logo.svg" alt="PGC Logo" />
+                </div>
+            </div>
+            <nav>
+               <a href="atd.html" class="nav-item" aria-label="Lab Stock (Boys Section)">
+                    <img src="Attendance logo (N).png" alt="Stock Icon" />
+                    <span class="nav-text">Attendance</span>
+                    <span class="tooltip">Attendance</span>
+                </a>
+
+                <a href="stock.html" class="nav-item" aria-label="Lab Stock (Boys Section)">
+                    <img src="REAL1111.png" alt="Stock Icon" />
+                    <span class="nav-text">Stocks (B)</span>
+                    <span class="tooltip">Stocks (B)</span>
+                </a>
+                <a href="stocks.G.html" class="nav-item" aria-label="Lab Stocks (Girls Section)">
+                    <img src="REAL1111.png" alt="Stock Icon" />
+                    <span class="nav-text">Stocks (G)</span>
+                    <span class="tooltip">Stocks (G)</span>
+                </a>
+                <a href="spr.html" class="nav-item" aria-label="Reports">
+                    <img src="records.png" alt="Reports Icon" />
+                    <span class="nav-text">Reports</span>
+                    <span class="tooltip">Reports</span>
+                </a>
+                <a href="reciepts.html" class="nav-item" aria-label="Receipts">
+                    <img src="recipets.png" alt="Receipts Icon" />
+                    <span class="nav-text">Receipts</span>
+                    <span class="tooltip">Receipts</span>
+                </a>
+
+                  <a href="about.html" class="nav-item" aria-label="About Portal">
+                    <img src="aboutus.png" alt="About Icon" />
+                    <span class="nav-text">About Portal</span>
+                    <span class="tooltip">About Portal</span>
+                </a>
+                
+            </nav>
+            <div class="p-4">
+                <button id="logout" aria-label="Logout">
+                    <img src="LOGOUT LOGO.png" alt="Logout Icon" />
+                    <span class="nav-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <main id="main-content">
+            <header id="main-header">
+                <div id="breadcrumb">
+                    <span class="text-gray-400">Home</span> / <span id="current-page">About Portal</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="current-time"></span>
+                    </div>
+            </header>
+
+            <div class="physics-portal-banner">
+                <img src="PHYSICS PORTAL.png" alt="Physics Lab Portal" />
+            </div>
+
+            <div class="college-address-stip">
+                <img src="Stip.png" alt="Punjab College Daewoo Road, Faisalabad" />
+            </div>
+
+            <div class="pgc-section-divider"></div>
+
+            <section id="page-container">
+                <div id="about-portal-card" class="page-content">
+                    <h2>WE GOT <span>INNOVATION</span></h2>
+                    <p>This Physics Lab Portal is designed to streamline the management of lab activities, resources, and student engagement within Punjab College, Daewoo Road, Faisalabad. It aims to provide a centralized platform for tracking attendance, managing lab inventory for both boys and girls sections, generating comprehensive reports, and handling receipts with unparalleled efficiency. Our commitment is to foster a dynamic and organized learning environment, ensuring that our students have access to the best resources and that lab operations run seamlessly for a brighter scientific future.</p>
+                    <p class="chairman-signature">By Imran Hassan </p>
+                    </div>
+
+                <div id="stock" class="page-content hidden">
+                    <h2>Lab Stock Management</h2>
+                    <p>Track equipment and supplies for both sections.</p>
+                    <div class="mt-4">
+                        <button class="action-btn">Update Stock</button>
+                    </div>
+                </div>
+                <div id="reports" class="page-content hidden">
+                    <h2>Reports & Analytics</h2>
+                    <p>Generate detailed lab activity reports.</p>
+                    <div class="mt-4">
+                        <button class="action-btn">Download PDF</button>
+                    </div>
+                </div>
+                <div id="settings" class="page-content hidden">
+                    <h2>Application Settings</h2>
+                    <p>Customize your portal experience.</p>
+                    <div class="mt-4">
+                        <button class="action-btn">Save Settings</button>
+                    </div>
+                </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+
+
+
+
+<script>
+    // 🔐 Check login status
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        alert("Please log in first!");
+        window.location.href = "login.html";
+    }
+
+    // 🧭 Route definitions
+    const routes = {
+        'about-portal': { title: 'About Portal', content: 'about-portal-card' },
+        'stock': { title: 'Stock', content: 'stock' },
+        'reports': { title: 'Reports', content: 'reports' },
+        'settings': { title: 'Settings', content: 'settings' },
+        'protocol': { title: 'Protocol', content: 'protocol' }
+    };
+
+    // 🚦 Set active route on hash change
+    function setActiveRoute() {
+        const hash = window.location.hash.slice(1) || 'about-portal';
+        const route = routes[hash] || routes['about-portal'];
+
+        document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+        const currentPage = document.querySelector(`#${route.content}`);
+        if (currentPage) {
+            currentPage.classList.remove('hidden');
+            document.querySelector('#page-container').classList.add('active');
+        }
+
+        document.querySelector('#current-page').textContent = route.title;
+        const activeNav = document.querySelector(`a[href="#${hash}"]`);
+        if (activeNav) activeNav.classList.add('active');
+
+        localStorage.setItem('lastRoute', hash);
+    }
+
+    // 🕛 Midnight Protocol Easter Egg
+    function checkMidnightProtocol() {
+        const currentHour = new Date().getHours();
+        const nav = document.querySelector('nav');
+        const existing = document.querySelector('#midnight-protocol-item');
+
+        if (currentHour === 0 && !existing) {
+            const egg = document.createElement('a');
+            egg.href = '#protocol';
+            egg.id = 'midnight-protocol-item';
+            egg.className = 'nav-item';
+            egg.innerHTML = `
+                <img src="alert.svg" alt="Protocol Icon" />
+                <span class="nav-text">Protocol Initiated 🚨</span>
+                <span class="tooltip">Protocol Initiated</span>
+            `;
+            nav.appendChild(egg);
+            anime({
+                targets: egg,
+                translateY: [20, 0],
+                opacity: [0, 1],
+                duration: 500,
+                easing: 'easeOutQuad'
+            });
+        } else if (currentHour !== 0 && existing) {
+            nav.removeChild(existing);
+        }
+    }
+
+    checkMidnightProtocol();
+    setInterval(checkMidnightProtocol, 3600000); // ⏱️ Check every hour
+
+    // 🚀 Init
+    window.addEventListener('hashchange', setActiveRoute);
+    window.addEventListener('load', () => {
+        const lastRoute = localStorage.getItem('lastRoute') || 'about-portal';
+        window.location.hash = lastRoute;
+        setActiveRoute();
+    });
+
+    // 🚪 Logout
+    document.querySelector('#logout').addEventListener('click', () => {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'login.html';
+    });
+
+    // ⏰ Update clock every second
+    function updateTime() {
+        const now = new Date();
+        document.querySelector('#current-time').textContent = now.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // 🎮 Keyboard navigation
+    let currentNavIndex = 0;
+    document.addEventListener('keydown', (e) => {
+        const navItems = Array.from(document.querySelectorAll('.nav-item:not(.hidden)'));
+        if (!navItems.length) return;
+
+        if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+            e.preventDefault();
+            currentNavIndex = (currentNavIndex + 1) % navItems.length;
+            navItems[currentNavIndex].focus();
+        } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+            e.preventDefault();
+            currentNavIndex = (currentNavIndex - 1 + navItems.length) % navItems.length;
+            navItems[currentNavIndex].focus();
+        } else if (e.key === 'Enter' && document.activeElement.classList.contains('nav-item')) {
+            document.activeElement.click();
+        }
+    });
+
+    // 🎞️ Intro animations (only if #sidebar and #main-header exist)
+    if (document.querySelector('#sidebar')) {
+        anime({
+            targets: '#sidebar',
+            translateX: [-260, 0],
+            opacity: [0, 1],
+            duration: 800,
+            easing: 'easeOutExpo',
+            delay: 200
+        });
+    }
+
+    if (document.querySelector('#main-header')) {
+        anime({
+            targets: '#main-header',
+            translateY: [-50, 0],
+            opacity: [0, 1],
+            duration: 700,
+            easing: 'easeOutQuad',
+            delay: 800
+        });
+    }
+
+    anime({
+        targets: '.nav-item',
+        translateY: [20, 0],
+        opacity: [0, 1],
+        duration: 600,
+        easing: 'easeOutQuad',
+        delay: anime.stagger(100, { start: 400 })
+    });
+
+    // 💥 Button press feedback
+    document.querySelectorAll('.action-btn, #logout').forEach(btn => {
+        btn.addEventListener('click', () => {
+            anime({
+                targets: btn,
+                scale: [1, 0.95, 1],
+                duration: 200,
+                easing: 'easeOutQuad'
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

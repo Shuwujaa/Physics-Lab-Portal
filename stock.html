@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Physics Lab Stock - PGC</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <title>Physics Lab Stock - PGC</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Oswald', sans-serif;
+      background: linear-gradient(to bottom right, #2c2b6f 20%, #2c2b6f 80%);
+      margin: 0;
+      padding: 20px;
+      color: white;
+    }
+
+    h2, h3 {
+      text-align: center;
+      margin: 0;
+      font-family: 'Oswald', sans-serif;
+      color: white;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .pdf-btn {
+      display: block;
+      margin: 0 auto 20px;
+      padding: 10px 30px;
+      background: #2c2b6f;
+      color: white;
+      border: 2px solid #e13a27;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .pdf-btn:hover {
+      background: #2c2b6f;
+      border-color: #2c2b6f;
+    }
+
+    #table-container {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      color: #2c2b6f;
+    }
+
+    th {
+      background: linear-gradient( #2c2b6f, #2c2b6f);
+      color: white;
+      padding: 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      background: #fdfdfd;
+    }
+
+   
+    .category-row td {
+      background: #2c2b6f;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+    }
+    .image-banner-placeholder {
+  width: 100%;
+  height: 120px;
+  border: 3px dashed #e13a27;
+  border-radius: 12px;
+  background-color: #fff;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e13a27;
+  font-size: 16px;
+  font-style: italic;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.logo {
+  height: 80px;
+  margin-right: 15px;
+}
+.popup {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  background: white;
+  border: 2px solid #2c2b6f;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  padding: 10px;
+  z-index: 100;
+  border-radius: 10px;
+}
+.popup button {
+  display: block;
+  width: 100%;
+  background-color: #2c2b6f;
+  color: white;
+  border: none;
+  margin: 5px 0;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.popup button:hover {
+  background-color: #e13a27;
+}
+.hidden {
+  display: none;
+}
+
+.popup {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  background: #fff;
+  border: 2px solid #2c2b6f;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+  padding: 15px;
+  z-index: 999;
+  border-radius: 15px;
+  animation: fadeIn 0.2s ease-in-out;
+  width: 260px;
+}
+
+.popup button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background-color: #2c2b6f;
+  color: #fff;
+  border: none;
+  margin: 8px 0;
+  padding: 12px 14px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.popup button img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.popup button:hover {
+  background-color: #e13a27;
+  transform: scale(1.03);
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+   
+  </style>
+</head>
+
+
+<body>
+    <div class="logo-container">
+  <img src="logo.svg" alt="PGC Logo" class="logo">
+</div>
+
+<div class="strip">
+    <image src="Stip.png"></image>
+</div>
+
+<div class="strip">
+    <image src="STRIP.png"></image>
+</div>
+
+<div class="banner-image">
+  <img src="boys.png" alt="Lab Banner" class="wide-banner">
+</div>
+
+
+  <button class="pdf-btn" onclick="downloadPDF()">Download as PDF</button>
+
+<!-- Add Row Button -->
+<button class="pdf-btn" onclick="showCategoryOptions()">➕ Add New Row</button>
+
+<div id="category-popup" class="popup hidden">
+  <button onclick="addRowToCategory('⚙️ Measuring Instruments')">
+    <img src="measuring.png" alt="Measuring"> Measuring Instruments
+  </button>
+  <button onclick="addRowToCategory('🔌 Electrical Equipment')">
+    <img src="electrial.png" alt="Electrical"> Electrical Equipment
+  </button>
+  <button onclick="addRowToCategory('🧪 Experimental Apparatus')">
+    <img src="apratus.png" alt="Experimental"> Experimental Apparatus
+  </button>
+  <button onclick="addRowToCategory('🔧 Tools & Miscellaneous')">
+    <img src="toolss.png" alt="Tools"> Tools & Miscellaneous
+  </button>
+</div>
+
+
+
+
+  <div id="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Sr #</th>
+          <th>Description of Assets</th>
+          <th>Quantity</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="category-row"><td colspan="4">⚙️ Measuring Instruments</td></tr>
+        <tr><td>1</td><td>Amm meter China</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+        <tr><td>2</td><td>AVO meter analogue China</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>3</td><td>AVO meter digital</td><td contenteditable="true">4</td><td contenteditable="true"></td></tr>
+        <tr><td>11</td><td>Commercial thermometer</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+        <tr><td>21</td><td>C-R-O</td><td contenteditable="true">1</td><td contenteditable="true"></td></tr>
+        <tr><td>32</td><td>Galvanometer</td><td contenteditable="true">22</td><td contenteditable="true"></td></tr>
+        <tr><td>47</td><td>Meter Rod</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>48</td><td>Micro ammeter China</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+        <tr><td>49</td><td>Micrometer Screw gauge</td><td contenteditable="true">35</td><td contenteditable="true"></td></tr>
+        <tr><td>81</td><td>Vernier calipers (China)</td><td contenteditable="true">41</td><td contenteditable="true"></td></tr>
+        <tr><td>82</td><td>Voltmeter</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+
+        <tr class="category-row"><td colspan="4">🔌 Electrical Equipment</td></tr>
+        <tr><td>5</td><td>Bulb (100 wt)</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>6</td><td>Bulb (200 wt)</td><td contenteditable="true">7</td><td contenteditable="true"></td></tr>
+        <tr><td>7</td><td>Burglar alarms</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>8</td><td>Cell D-size (1.5 volt)</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>22</td><td>Digital power supply</td><td contenteditable="true">2</td><td contenteditable="true"></td></tr>
+        <tr><td>23</td><td>Double cell box</td><td contenteditable="true">24</td><td contenteditable="true"></td></tr>
+        <tr><td>27</td><td>Extension Wire</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>28</td><td>Fire Alarm</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>45</td><td>Mega ohm Resistance box</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>57</td><td>Power supply</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>66</td><td>Sodium lamp App.</td><td contenteditable="true">1</td><td contenteditable="true"></td></tr>
+
+        <tr class="category-row"><td colspan="4">🧪 Experimental Apparatus</td></tr>
+        <tr><td>12</td><td>Complete diode apparatus</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>13</td><td>Charging & discharging of capacitor</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>14</td><td>Current vs Capacitance for AC</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>15</td><td>Voltage vs Current for filament</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>16</td><td>Neon flash lamp apparatus</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>31</td><td>Free fall with electronic timer</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>33</td><td>Gravesend’s complete apparatus</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>53</td><td>Photo cell app.</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>59</td><td>Resonance tube apparatus</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>68</td><td>Sonometer</td><td contenteditable="true">7</td><td contenteditable="true"></td></tr>
+        <tr><td>69</td><td>Spiral spring apparatus</td><td contenteditable="true">14</td><td contenteditable="true"></td></tr>
+
+        <tr class="category-row"><td colspan="4">🔧 Tools & Miscellaneous</td></tr>
+        <tr><td>10</td><td>Cobbler Nail</td><td contenteditable="true">1 box</td><td contenteditable="true"></td></tr>
+        <tr><td>25</td><td>Electric balance</td><td contenteditable="true">1</td><td contenteditable="true"></td></tr>
+        <tr><td>36</td><td>High Resistance boxes</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>60</td><td>Rheostat</td><td contenteditable="true">20</td><td contenteditable="true"></td></tr>
+        <tr><td>63</td><td>Screw driver set</td><td contenteditable="true">2</td><td contenteditable="true"></td></tr>
+        <tr><td>73</td><td>Stop watch digital China</td><td contenteditable="true">20</td><td contenteditable="true"></td></tr>
+        <tr><td>83</td><td>Wedge Wooden (large)</td><td contenteditable="true">14</td><td contenteditable="true"></td></tr>
+        <tr><td>84</td><td>Weight half kg</td><td contenteditable="true">16 set</td><td contenteditable="true"></td></tr>
+        <!-- You can continue or adjust categories as needed -->
+      </tbody>
+    </table>
+  </div>
+
+<script>
+  async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const table = document.getElementById('table-container');
+
+    const canvas = await html2canvas(table, {
+      scale: 2,
+      scrollY: -window.scrollY,
+      useCORS: true
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('l', 'pt', 'a4');
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    const imgWidth = pageWidth - 40;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let position = 20;
+    let remainingHeight = imgHeight;
+
+    let pageCanvas = document.createElement('canvas');
+    let pageCtx = pageCanvas.getContext('2d');
+    let pageCount = 0;
+
+    while (remainingHeight > 0) {
+      let sliceHeight = (canvas.width * (pageHeight - 40)) / imgWidth;
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = sliceHeight;
+
+      pageCtx.clearRect(0, 0, canvas.width, sliceHeight);
+      pageCtx.drawImage(canvas, 0, canvas.height - remainingHeight, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
+
+      let img = pageCanvas.toDataURL('image/png');
+      if (pageCount > 0) pdf.addPage();
+      pdf.addImage(img, 'PNG', 20, 20, imgWidth, pageHeight - 40);
+
+      remainingHeight -= sliceHeight;
+      pageCount++;
+    }
+
+    pdf.save('PGC_PhysicsLab_Stock_July2025.pdf');
+  }
+  
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+async function downloadPDF() {
+  const element = document.getElementById('table-container');
+  const opt = {
+    margin: [10, 10, 10, 10], // top, left, bottom, right in pt
+    filename: 'PGC_PhysicsLab_Stock_July2025.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'pt', format: 'a4', orientation: 'landscape' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  };
+  html2pdf().set(opt).from(element).save();
+}
+function showCategoryOptions() {
+  const popup = document.getElementById("category-popup");
+  popup.classList.toggle("hidden");
+}
+
+function addRowToCategory(emojiCategoryTitle) {
+  const table = document.querySelector("#table-container table tbody");
+  const rows = Array.from(table.rows);
+  let insertIndex = -1;
+
+  for (let i = 0; i < rows.length; i++) {
+    if (rows[i].classList.contains("category-row") &&
+        rows[i].cells[0].textContent.trim() === emojiCategoryTitle) {
+      insertIndex = i + 1;
+      while (insertIndex < rows.length && !rows[insertIndex].classList.contains("category-row")) {
+        insertIndex++;
+      }
+      break;
+    }
+  }
+
+  if (insertIndex === -1) {
+    alert("Category not found!");
+    return;
+  }
+
+  const newRow = document.createElement("tr");
+  newRow.innerHTML = `
+    <td></td>
+    <td contenteditable="true">New Asset</td>
+    <td contenteditable="true"></td>
+    <td contenteditable="true"></td>
+  `;
+
+  if (insertIndex >= rows.length) {
+    table.appendChild(newRow);
+  } else {
+    table.insertBefore(newRow, rows[insertIndex]);
+  }
+
+  updateRowNumbers();
+  hidePopup();
+}
+
+function updateRowNumbers() {
+  const table = document.querySelector("#table-container table tbody");
+  let count = 1;
+  for (const row of table.rows) {
+    if (!row.classList.contains("category-row")) {
+      row.cells[0].textContent = count++;
+    }
+  }
+}
+
+function hidePopup() {
+  document.getElementById("category-popup").classList.add("hidden");
+}
+
+// Optional: Hide popup when clicking outside
+document.addEventListener("click", (e) => {
+  const popup = document.getElementById("category-popup");
+  if (!popup.contains(e.target) && e.target.innerText !== "➕ Add New Row") {
+    popup.classList.add("hidden");
+  }
+});
+function addRowToCategory(categoryName) {
+  const table = document.querySelector("#table-container table tbody");
+  const rows = Array.from(table.rows);
+  let insertIndex = -1;
+
+  for (let i = 0; i < rows.length; i++) {
+    if (rows[i].classList.contains("category-row") &&
+        rows[i].cells[0].textContent.includes(categoryName)) {
+      insertIndex = i + 1;
+      while (insertIndex < rows.length && !rows[insertIndex].classList.contains("category-row")) {
+        insertIndex++;
+      }
+      break;
+    }
+  }
+
+  if (insertIndex === -1) {
+    alert("Category not found!");
+    return;
+  }
+
+  const newRow = document.createElement("tr");
+  newRow.innerHTML = `
+    <td></td>
+    <td contenteditable="true">New Asset</td>
+    <td contenteditable="true"></td>
+    <td contenteditable="true"></td>
+  `;
+
+  if (insertIndex >= rows.length) {
+    table.appendChild(newRow);
+  } else {
+    table.insertBefore(newRow, rows[insertIndex]);
+  }
+
+  updateRowNumbers();
+  hidePopup();
+}
+
+</script>
+</body>
+</html>

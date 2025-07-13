@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Attendance Portal</title>
+
+  <!-- 🔒 Login Check -->
+  <script>
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      alert("Please log in first!");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #2c2b6f;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .header {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .header-image img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      opacity: 0.4;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .logo {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      height: 120px;
+    }
+
+    .logo img {
+      height: 100%;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .main-content {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+      text-align: center;
+      width: 90%;
+      max-width: 600px;
+      margin: 40px auto;
+    }
+
+    .logout-btn, .nav-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #e13a27;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+
+    .logout-btn:hover, .nav-btn:hover {
+      background-color: #c02f20;
+    }
+
+    #clock {
+      margin-top: 10px;
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    .quote {
+      margin-top: 30px;
+      font-style: italic;
+      font-size: 0.95em;
+      color: #ddd;
+    }
+
+    .btn-group {
+      margin-top: 25px;
+    }
+
+    .btn-group .nav-btn {
+      margin: 10px 10px 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">
+      <img src="logo.svg" alt="Physics Lab Logo">
+    </div>
+    <div class="header-image">
+      <img src="Stip.png" alt="Header Strip">
+    </div>
+    <div class="header-image">
+      <img src="STRIP.png" alt="Second Strip">
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="main-content">
+      <h1 id="welcome-msg">Welcome to the Physics Lab Attendance Portal</h1>
+      <p id="clock"></p>
+
+      <div class="btn-group">
+        <a href="attendance.html" class="nav-btn">Take Attendance</a>
+        <a href="stock.html" class="nav-btn">Manage Stock</a>
+      </div>
+
+      <button class="logout-btn" onclick="logout()">Logout</button>
+
+      <p class="quote">“Somewhere, something incredible is waiting to be known.” – Carl Sagan</p>
+    </div>
+  </div>
+
+  <script>
+    // 🌞 Live Clock
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById("clock").innerText = now.toLocaleString();
+    }, 1000);
+
+    // 🧠 Personalized Welcome
+    const username = localStorage.getItem("username") || "User";
+    document.getElementById("welcome-msg").innerText = `Welcome, ${username}, to the Physics Lab Attendance Portal`;
+
+    // 🔓 Logout Function
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("username");
+      window.location.href = "login.html";
+    }
+
+    // ⌨️ Esc to Logout
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") logout();
+    });
+  </script>
+
+</body>
+</html>

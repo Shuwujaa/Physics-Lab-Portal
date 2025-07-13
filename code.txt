@@ -1,0 +1,63 @@
+ <div id="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Sr #</th>
+          <th>Description of Assets</th>
+          <th>Quantity</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="category-row"><td colspan="4">⚙️ Measuring Instruments</td></tr>
+        <tr><td>1</td><td>Amm meter China</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+        <tr><td>2</td><td>AVO meter analogue China</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>3</td><td>AVO meter digital</td><td contenteditable="true">4</td><td contenteditable="true"></td></tr>
+        <tr><td>11</td><td>Commercial thermometer</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+        <tr><td>21</td><td>C-R-O</td><td contenteditable="true">1</td><td contenteditable="true"></td></tr>
+        <tr><td>32</td><td>Galvanometer</td><td contenteditable="true">22</td><td contenteditable="true"></td></tr>
+        <tr><td>47</td><td>Meter Rod</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>48</td><td>Micro ammeter China</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+        <tr><td>49</td><td>Micrometer Screw gauge</td><td contenteditable="true">35</td><td contenteditable="true"></td></tr>
+        <tr><td>81</td><td>Vernier calipers (China)</td><td contenteditable="true">41</td><td contenteditable="true"></td></tr>
+        <tr><td>82</td><td>Voltmeter</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+
+        <tr class="category-row"><td colspan="4">🔌 Electrical Equipment</td></tr>
+        <tr><td>5</td><td>Bulb (100 wt)</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>6</td><td>Bulb (200 wt)</td><td contenteditable="true">7</td><td contenteditable="true"></td></tr>
+        <tr><td>7</td><td>Burglar alarms</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>8</td><td>Cell D-size (1.5 volt)</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>22</td><td>Digital power supply</td><td contenteditable="true">2</td><td contenteditable="true"></td></tr>
+        <tr><td>23</td><td>Double cell box</td><td contenteditable="true">24</td><td contenteditable="true"></td></tr>
+        <tr><td>27</td><td>Extension Wire</td><td contenteditable="true">3</td><td contenteditable="true"></td></tr>
+        <tr><td>28</td><td>Fire Alarm</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>45</td><td>Mega ohm Resistance box</td><td contenteditable="true">6</td><td contenteditable="true"></td></tr>
+        <tr><td>57</td><td>Power supply</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>66</td><td>Sodium lamp App.</td><td contenteditable="true">1</td><td contenteditable="true"></td></tr>
+
+        <tr class="category-row"><td colspan="4">🧪 Experimental Apparatus</td></tr>
+        <tr><td>12</td><td>Complete diode apparatus</td><td contenteditable="true">11</td><td contenteditable="true"></td></tr>
+        <tr><td>13</td><td>Charging & discharging of capacitor</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>14</td><td>Current vs Capacitance for AC</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>15</td><td>Voltage vs Current for filament</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>16</td><td>Neon flash lamp apparatus</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>31</td><td>Free fall with electronic timer</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>33</td><td>Gravesend’s complete apparatus</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>53</td><td>Photo cell app.</td><td contenteditable="true">12</td><td contenteditable="true"></td></tr>
+        <tr><td>59</td><td>Resonance tube apparatus</td><td contenteditable="true">10</td><td contenteditable="true"></td></tr>
+        <tr><td>68</td><td>Sonometer</td><td contenteditable="true">7</td><td contenteditable="true"></td></tr>
+        <tr><td>69</td><td>Spiral spring apparatus</td><td contenteditable="true">14</td><td contenteditable="true"></td></tr>
+
+        <tr class="category-row"><td colspan="4">🔧 Tools & Miscellaneous</td></tr>
+        <tr><td>10</td><td>Cobbler Nail</td><td contenteditable="true">1 box</td><td contenteditable="true"></td></tr>
+        <tr><td>25</td><td>Electric balance</td><td contenteditable="true">1</td><td contenteditable="true"></td></tr>
+        <tr><td>36</td><td>High Resistance boxes</td><td contenteditable="true">16</td><td contenteditable="true"></td></tr>
+        <tr><td>60</td><td>Rheostat</td><td contenteditable="true">20</td><td contenteditable="true"></td></tr>
+        <tr><td>63</td><td>Screw driver set</td><td contenteditable="true">2</td><td contenteditable="true"></td></tr>
+        <tr><td>73</td><td>Stop watch digital China</td><td contenteditable="true">20</td><td contenteditable="true"></td></tr>
+        <tr><td>83</td><td>Wedge Wooden (large)</td><td contenteditable="true">14</td><td contenteditable="true"></td></tr>
+        <tr><td>84</td><td>Weight half kg</td><td contenteditable="true">16 set</td><td contenteditable="true"></td></tr>
+        <!-- You can continue or adjust categories as needed -->
+      </tbody>
+    </table>
+  </div>

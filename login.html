@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Physics Lab</title>
+  <style>
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(120deg, #10144c, #202864);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      padding: 40px;
+      width: 320px;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .logo {
+      margin-bottom: 15px;
+    }
+
+ .logo img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 100%;
+  box-shadow: none; /* No glow */
+}
+
+
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #e13a27;
+      letter-spacing: 1px;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .login-container input::placeholder {
+      color: #ccc;
+    }
+
+    .login-container input:focus {
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #e13a27;
+      color: #10144c;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-container button:hover {
+      background-color: #e13a27;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+    <header>
+    <div class="gg-space">
+      <img src="img-shape02.webp" alt="GG Image Placeholder">
+    </div>
+  </header>
+
+  <div class="login-container">
+    <div class="logo">
+      <img src="POTAL.png" alt="Physics Lab Logo" />
+    </div>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <div class="footer">© 2025 Physics Dept | PGC</div>
+  </div>
+
+  <script>
+    const validUser = "admin";
+    const validPass = "123"; // Change this password later
+
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      if (user === validUser && pass === validPass) {
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.href = "index.html";
+      } else {
+        alert("Access Denied. Invalid credentials.");
+      }
+    }
+  </script>
+</body>
+</html>

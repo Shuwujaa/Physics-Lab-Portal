@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Physics Lab Attendance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #2c2b6f;
+      color: #fff;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+      background-color: #2c2b6f;
+    }
+
+    .logo img {
+      width: 150px;
+    }
+
+    .gg-space {
+      width: 150px;
+      height: 80px;
+      margin-left: 20px;
+    }
+
+    .gg-space img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .striped-background {
+      height: 100px;
+      background: repeating-linear-gradient(
+        45deg,
+        #ff4500,
+        #ff4500 25px,
+        #191970 25px,
+        #191970 50px
+      );
+    }
+
+    .main {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 40px 0;
+      flex-wrap: wrap;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 30px;
+      margin-left: 30px;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label img {
+      height: 24px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      font-size: 15px;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #ffffff, #2c2b6f);
+      color: #000;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .field select option {
+      background: #fff;
+      color: #000;
+      font-weight: bold;
+      padding: 10px;
+    }
+
+    button,
+    .whatsapp-button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: linear-gradient(to right, #2c2b6f, #1f1e5a);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover,
+    .whatsapp-button:hover {
+      transform: scale(1.02);
+    }
+
+    .side-image {
+      height: 100%;
+      position: relative;
+      margin-right: 30px;
+    }
+
+    .side-image img {
+      height: 100vh;
+      display: block;
+    }
+
+    .header-image img {
+      width: 100%;
+      height: auto;
+    }
+    .field input[type="time"]:nth-of-type(2) {
+  background: linear-gradient(to right, #ffffff, #2c2b6f);
+}
+
+.field input[type="time"]:first-of-type {
+  background: linear-gradient(to right, #ffffff, #2c2b6f);
+}
+
+.field input[type="time"]:last-of-type {
+  background: linear-gradient(to right, #2c2b6f, #ffffff);
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #2c2b6f;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 2px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+  z-index: 1;
+  border-radius: 6px;
+}
+
+.dropdown-content a {
+  color: #2c2b6f;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #1f1e5a;
+}
+
+.dropbtn::after {
+  content: " ▼";
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.dropdown:hover .dropbtn::after {
+  transform: rotate(-180deg);
+}
+.dropdown-content {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.dropdown:hover .dropdown-content {
+  max-height: 500px;
+  opacity: 1;
+  pointer-events: auto;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.dropbtn {
+  font-family: 'Anton', sans-serif;
+}
+
+.logo img {
+  height: 65px; /* Try 60 or 70 if 65 feels off */
+  transition: height 0.3s ease; /* Smooth resize if needed */
+}
+
+  </style>
+</head>
+<body>
+
+ <header>
+
+  
+  <div class="logo">
+    <img src="logo.svg" alt="Physics Lab Logo">
+  </div>
+  
+  <div class="dropdown">
+    <button class="dropbtn">☰ More</button>
+    <div class="dropdown-content">
+      <a href="spr.html">📋 Attendance Records</a>
+      <a href="stock.html">📦 Stock Entry Form</a>
+      <!-- You can add more options below -->
+      <!-- <a href="another.html">🧪 Another Form</a> -->
+    </div>
+  </div>
+</header>
+
+
+  <div class="header-image">
+    <img src="Stip.png" alt="Header Strip">
+  </div>
+
+  <div class="header-image">
+    <img src="STRIP.png" alt="Second Strip">
+  </div>
+
+  <div style="padding: 20px;">
+    <button onclick="location.href='spr.html'" style="padding: 10px 20px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">
+      View Attendance Records
+    </button>
+  </div>
+
+  <div class="main">
+    <div class="container">
+      <div class="field"><label><img src="date.png" alt="Date"></label><input type="date" id="date"></div>
+      <div class="field"><label><img src="day.png" alt="Day"></label><input type="text" id="day" readonly placeholder="Monday"></div>
+<div class="field">
+  <label><img src="TIME.png" alt="Time Range"></label>
+  <div style="display: flex; gap: 10px;">
+    <input type="time" id="startTime" placeholder="Start Time">
+    <input type="time" id="endTime" placeholder="End Time">
+  </div>
+</div>
+      <div class="field"><label><img src="class.png" alt="Class"></label><input type="text" id="class" placeholder="F.Sc 1st Year"></div>
+      <div class="field"><label><img src="section.png" alt="Section"></label><input type="text" id="section" placeholder="A, B, C..."></div>
+      <div class="field">
+        <label><img src="practical.png" alt="Practical Name"></label>
+        <select id="practical">
+          <option value="">Select a Practical</option>
+ <optgroup label="1st Year Practicals">
+      <option>Measure length and diameter of a solid cylinder and hence estimate its volume using Vernier callipers</option>
+      <option>Measure diameters of ball bearings using Screw Gauge and estimate their volumes with uncertainties</option>
+      <option>Determine radius of curvature of convex and concave lenses using a spherometer</option>
+      <option>Determine weight of a body by vector addition of forces</option>
+      <option>Verify two conditions of equilibrium using a suspended metre rod</option>
+      <option>Measure free fall time using ticker-timer to calculate g and suggest improvements</option>
+      <option>Investigate value of g using electronic timer and free fall method</option>
+      <option>Investigate momentum conservation by colliding trolleys using ticker-timer</option>
+      <option>Investigate downward force on a roller along inclined plane and plot graph between force and sinθ</option>
+      <option>Determine moment of inertia of a fly wheel</option>
+      <option>Investigate fall of steel balls through viscous medium to find terminal velocity and viscosity</option>
+      <option>Verify T ∝ √L for pendulum and find g from graph</option>
+      <option>Determine g using oscillating mass-spring system</option>
+      <option>Determine g using vibrating metal lamina suspended from different points</option>
+      <option>Determine frequency of AC using Melde’s apparatus or sonometer</option>
+      <option>Investigate laws of vibration of stretched strings via sonometer or electromagnetic method</option>
+      <option>Determine sound wavelength in air using stationary waves and resonance tube</option>
+      <option>Determine wavelength of light using diffraction grating and spectrometer</option>
+      <option>Determine slit separation of diffraction grating using laser of unknown wavelength</option>
+      <option>Measure diameter of wire or hair using laser</option>
+      <option>Determine pick count of nylon mesh using diffraction grating and laser</option>
+      <option>Measure mechanical equivalent of heat by electric method</option>
+      <option>Determine specific heat of a solid by electrical method</option>
+    </optgroup>
+
+    <optgroup label="2nd Year Practicals">
+      <option>Determine time constant by charging and discharging a capacitor through a resistor</option>
+      <option>Determine resistance of wire using slide wire bridge</option>
+      <option>Determine resistance of voltmeter by plotting R vs I/V graph</option>
+      <option>Determine resistance of voltmeter by capacitor discharge method</option>
+      <option>Analyze resistance variation of thermistor with temperature</option>
+      <option>Determine internal resistance of a cell using potentiometer</option>
+      <option>Determine emf of a cell using potentiometer</option>
+      <option>Determine emf and internal resistance of a cell by plotting V vs I</option>
+      <option>Investigate current vs voltage for a tungsten filament lamp</option>
+      <option>Convert galvanometer into 0–3 V voltmeter</option>
+      <option>Study current-capacitance relation in AC circuit using capacitors in series/parallel</option>
+      <option>Determine impedance of RL circuit at 50Hz and find inductance</option>
+      <option>Determine impedance of RC circuit at 50Hz and find capacitance</option>
+      <option>Determine Young’s modulus using Searle’s apparatus</option>
+      <option>Draw characteristics of a semiconductor diode and calculate forward/reverse resistance</option>
+      <option>Study half and full wave rectification using CRO</option>
+      <option>Study current variation with light intensity using a photocell</option>
+      <option>Determine Planck’s constant using internal potential barrier of LEDs</option>
+      <option>Observe mercury line spectrum with diffraction grating and determine visible spectrum width</option>
+      <option>Simulate radioactive decay using dice and measure simulated half-life</option>
+      <option>Draw characteristics curve of Geiger Muller tube</option>
+      <option>Measure background radiation and identify possible sources</option>
+      <option>Detect alpha particles using GM tube and CRO, determine count rate</option>
+    </optgroup>
+
+        </select>
+      </div>
+      <div class="field">
+        <label><img src="teacjer.png" alt="Teacher"></label>
+        <select id="whatsapp">
+          <option value="">Select Teacher</option>
+           <option value="3006649772">Prof. Athar Rafiq (Head of Department)</option>
+    <option value="3056391083">Prof. Rana Awais Khalid</option>
+    <option value="3008520235">Prof. Muhammad Afzal Dogar</option>
+    <option value="3007637275">Prof. M. ASHFAQ Dogar</option>
+    <option value="3067238416">Prof. Syed Irfan</option>
+    <option value="3084961050">Prof. M Shahid</option>
+    <option value="3227475885">Prof. M Salman Hanif</option>
+    <option value="3074861098">Prof. Iqra</option>
+    <option value="3007648236">Prof. Babar Hussain</option>
+    <option value="3338392644">Prof. Ahsan Rafique</option>
+    <option value="3236068823">Prof. Adeel Khan</option>
+    <option value="3130079578">Prof. Abdul Salam</option>
+    <option value="3067860011">Prof. Zia Ullah</option>
+    <option value="3246847237">Prof. M Zeeshan</option>
+    <option value="3226305824">Prof. Mansoor Akhtar</option>
+    <option value="3346538284">Prof. Arslan Asif</option>
+    <option value="3066988668">Prof. Arslan-2</option>
+    <option value="3377106797">Lab Assistant Muhammad Imran Hassan</option>
+        </select>
+      </div>
+      <button onclick="saveEntry()">Submit Entry</button>
+      <button class="whatsapp-button" onclick="sendWhatsApp()">Send to WhatsApp</button>
+    </div>
+
+    <div class="side-image">
+      <img src="img-shape02.webp" alt="Vertical Side Image">
+    </div>
+  </div>
+
+  <script>
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "login.html";
+  }
+</script>
+
+  <div class="header-image">
+    <img src="end.jpg" alt="Footer Strip">
+  </div>
+<script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
+
+<script>
+  document.getElementById("date").addEventListener("change", function () {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const selectedDate = new Date(this.value);
+    document.getElementById("day").value = days[selectedDate.getDay()];
+  });
+
+  function saveEntry() {
+    const entry = {
+      date: document.getElementById("date").value,
+      day: document.getElementById("day").value,
+      startTime: document.getElementById("startTime").value,
+      endTime: document.getElementById("endTime").value,
+      className: document.getElementById("class").value,
+      section: document.getElementById("section").value,
+      practical: document.getElementById("practical").value,
+      teacher: document.getElementById("whatsapp").selectedOptions[0].text
+    };
+
+    const entries = JSON.parse(localStorage.getItem("entries")) || [];
+    entries.push(entry);
+    localStorage.setItem("entries", JSON.stringify(entries));
+    alert("Entry saved!");
+  }
+
+  function sendWhatsApp() {
+    const teacherNumber = document.getElementById("whatsapp").value;
+    const text = `Date: ${document.getElementById("date").value}
+Day: ${document.getElementById("day").value}
+Time: ${document.getElementById("startTime").value} to ${document.getElementById("endTime").value}
+Class: ${document.getElementById("class").value}
+Section: ${document.getElementById("section").value}
+Practical: ${document.getElementById("practical").value}`;
+
+    const encodedText = encodeURIComponent(text);
+    if (teacherNumber) {
+      window.open(`https://wa.me/92${teacherNumber}?text=${encodedText}`, '_blank');
+    } else {
+      alert("Please select a teacher.");
+    }
+  }
+</script>
+
+</body>
+</html>
