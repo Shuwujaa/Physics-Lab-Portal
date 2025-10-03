@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Physics Lab Attendance</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -222,7 +225,18 @@ header {
   height: 65px; /* Try 60 or 70 if 65 feels off */
   transition: height 0.3s ease; /* Smooth resize if needed */
 }
-
+.choices__list--dropdown .choices__item[data-value^="1st"] {
+  color: #003366; /* dark blue */
+  font-weight: bold;
+}
+.choices__list--dropdown .choices__item[data-value^="2nd"] {
+  color: #006400; /* dark green */
+  font-weight: bold;
+}
+.choices__inner {
+    color: black !important;
+}
+  
   </style>
 </head>
 <body>
@@ -278,55 +292,72 @@ header {
         <select id="practical">
           <option value="">Select a Practical</option>
  <optgroup label="1st Year Practicals">
-      <option>Measure length and diameter of a solid cylinder and hence estimate its volume using Vernier callipers</option>
-      <option>Measure diameters of ball bearings using Screw Gauge and estimate their volumes with uncertainties</option>
-      <option>Determine radius of curvature of convex and concave lenses using a spherometer</option>
-      <option>Determine weight of a body by vector addition of forces</option>
-      <option>Verify two conditions of equilibrium using a suspended metre rod</option>
-      <option>Measure free fall time using ticker-timer to calculate g and suggest improvements</option>
-      <option>Investigate value of g using electronic timer and free fall method</option>
-      <option>Investigate momentum conservation by colliding trolleys using ticker-timer</option>
-      <option>Investigate downward force on a roller along inclined plane and plot graph between force and sinθ</option>
-      <option>Determine moment of inertia of a fly wheel</option>
-      <option>Investigate fall of steel balls through viscous medium to find terminal velocity and viscosity</option>
-      <option>Verify T ∝ √L for pendulum and find g from graph</option>
-      <option>Determine g using oscillating mass-spring system</option>
-      <option>Determine g using vibrating metal lamina suspended from different points</option>
-      <option>Determine frequency of AC using Melde’s apparatus or sonometer</option>
-      <option>Investigate laws of vibration of stretched strings via sonometer or electromagnetic method</option>
-      <option>Determine sound wavelength in air using stationary waves and resonance tube</option>
-      <option>Determine wavelength of light using diffraction grating and spectrometer</option>
-      <option>Determine slit separation of diffraction grating using laser of unknown wavelength</option>
-      <option>Measure diameter of wire or hair using laser</option>
-      <option>Determine pick count of nylon mesh using diffraction grating and laser</option>
-      <option>Measure mechanical equivalent of heat by electric method</option>
-      <option>Determine specific heat of a solid by electrical method</option>
+       <option value="1st-1">To find the volume of a given solid cylinder using vernier calipers</option>
+    <option value="1st-2">To determine the volume (capacity) of a given test tube using vernier calipers</option>
+    <option value="1st-3">To determine area of cross section of a given wire using micrometer screw gauge</option>
+    <option value="1st-4">To find the volume of a small sphere using a micrometer screw gauge</option>
+    <option value="1st-5">To find the unknown weight of a body by vector addition of forces</option>
+    <option value="1st-6">To determine the value of g by free fall using an electronic timer/ticker timer</option>
+    <option value="1st-7">To verify the following relations for the simple pendulum: Time period is independent of amplitude</option>
+    <option value="1st-8">To verify the following relations for the simple pendulum: Time period is independent of mass or density of the bob</option>
+    <option value="1st-9">To verify the following relations for the simple pendulum: Time period is directly proportional to square root of its length</option>
+    <option value="1st-10">To determine the acceleration due to gravity by oscillating mass-spring system</option>
+    <option value="1st-11">To verify the conditions of equilibrium for parallel forces using a suspended metre rod</option>
+    <option value="1st-12">To study the fall of a body through a viscous medium and deduce the coefficient of viscosity</option>
+    <option value="1st-13">To determine the Young's modulus of wire by Searle's apparatus</option>
+    <option value="1st-14">To determine the moment of inertia of a flywheel</option>
+    <option value="1st-15">To determine the frequency of an A.C supply by Melde's apparatus</option>
+    <option value="1st-16">To verify the law of length of vibrating stretched string using a sonometer</option>
+    <option value="1st-17">To verify the law of tension of vibrating stretched string using a sonometer</option>
+    <option value="1st-18">To verify the law of mass of vibrating stretched string using a sonometer</option>
+    <option value="1st-19">To determine the wavelength of sound in air using stationary waves and calculate the speed of sound</option>
+    <option value="1st-20">To determine the wavelength of sound in air using stationary waves by two resonance positions</option>
+    <option value="1st-21">To determine wavelength of sound in air using resonance tubes open at both ends</option>
+    <option value="1st-22">To determine the focal length of a convex lens by displacement method</option>
+    <option value="1st-23">To find the refractive index of the material of a prism by critical angle method</option>
+    <option value="1st-24">To determine the focal length of a concave lens using a plane mirror</option>
+    <option value="1st-25">To determine the focal length of a concave lens using a convex lens</option>
+    <option value="1st-26">To determine the refractive index of the material of a prism using a spectrometer</option>
+    <option value="1st-27">To find the refractive index of a liquid using a concave mirror</option>
+    <option value="1st-28">To determine the wavelength of sodium light by Newton's Rings</option>
+    <option value="1st-29">To determine the wavelength of light by diffraction grating using spectrometer</option>
+    <option value="1st-30">To set up a telescope and determine its magnifying power and length</option>
+    <option value="1st-31">To find diameter of wire or hair using laser</option>
+    <option value="1st-32">To find the coefficient of linear expansion of a rod by Pullinger's apparatus</option>
+    <option value="1st-33">To determine the mechanical equivalent of heat (J) by electrical method</option>
     </optgroup>
 
     <optgroup label="2nd Year Practicals">
-      <option>Determine time constant by charging and discharging a capacitor through a resistor</option>
-      <option>Determine resistance of wire using slide wire bridge</option>
-      <option>Determine resistance of voltmeter by plotting R vs I/V graph</option>
-      <option>Determine resistance of voltmeter by capacitor discharge method</option>
-      <option>Analyze resistance variation of thermistor with temperature</option>
-      <option>Determine internal resistance of a cell using potentiometer</option>
-      <option>Determine emf of a cell using potentiometer</option>
-      <option>Determine emf and internal resistance of a cell by plotting V vs I</option>
-      <option>Investigate current vs voltage for a tungsten filament lamp</option>
-      <option>Convert galvanometer into 0–3 V voltmeter</option>
-      <option>Study current-capacitance relation in AC circuit using capacitors in series/parallel</option>
-      <option>Determine impedance of RL circuit at 50Hz and find inductance</option>
-      <option>Determine impedance of RC circuit at 50Hz and find capacitance</option>
-      <option>Determine Young’s modulus using Searle’s apparatus</option>
-      <option>Draw characteristics of a semiconductor diode and calculate forward/reverse resistance</option>
-      <option>Study half and full wave rectification using CRO</option>
-      <option>Study current variation with light intensity using a photocell</option>
-      <option>Determine Planck’s constant using internal potential barrier of LEDs</option>
-      <option>Observe mercury line spectrum with diffraction grating and determine visible spectrum width</option>
-      <option>Simulate radioactive decay using dice and measure simulated half-life</option>
-      <option>Draw characteristics curve of Geiger Muller tube</option>
-      <option>Measure background radiation and identify possible sources</option>
-      <option>Detect alpha particles using GM tube and CRO, determine count rate</option>
+           <option value="2nd-1">To determine the resistance and specific resistance (resistivity) of a wire using a slide wire bridge</option>
+    <option value="2nd-2">To determine the resistance of a galvanometer by half deflection method</option>
+    <option value="2nd-3">To determine the figure of merit of a galvanometer by half deflection method</option>
+    <option value="2nd-4">To determine the resistance of a voltmeter by plotting a graph between R and 1/I</option>
+    <option value="2nd-5">To study the variations of the resistance of a thermistor with temperature</option>
+    <option value="2nd-6">To convert a given galvanometer into an ammeter reading up to 0.1 ampere</option>
+    <option value="2nd-7">To convert a given galvanometer into a voltmeter reading up to 3 volts</option>
+    <option value="2nd-8">To determine the internal resistance of a cell by potentiometer</option>
+    <option value="2nd-9">To determine the emf of a cell using a potentiometer</option>
+    <option value="2nd-10">To compare the emfs of two cells using a potentiometer</option>
+    <option value="2nd-11">To study the relation between current passing through a tungsten filament lamp and potential difference across it</option>
+    <option value="2nd-12">To study the variation of magnetic field along the axis of a circular coil</option>
+    <option value="2nd-13">To study the charging and discharging of a capacitor and measure the time constant</option>
+    <option value="2nd-14">To study the relation between current and capacitor in an A.C. circuit</option>
+    <option value="2nd-15">To study the characteristics of a semiconductor diode and calculate forward and reverse current resistances</option>
+    <option value="2nd-16">To study the characteristics of an NPN transistor</option>
+    <option value="2nd-17">To study the variation of photoelectric current with intensity of light using a photocell</option>
+    <option value="2nd-18">To estimate the value of Planck's constant using a photocell tube and coloured light filters</option>
+    <option value="2nd-19">To measure A.C and D.C voltages by Cathode Ray Oscilloscope (CRO)</option>
+    <option value="2nd-20">To verify the truth table for OR gate</option>
+    <option value="2nd-21">To verify the truth table for AND gate</option>
+    <option value="2nd-22">To verify the truth table for NOT gate (inverter)</option>
+    <option value="2nd-23">To verify the truth table for NOR gate</option>
+    <option value="2nd-24">To verify the truth table for NAND gate</option>
+    <option value="2nd-25">To verify the truth table for XOR (exclusive OR) gate</option>
+    <option value="2nd-26">To verify the truth table for XNOR (exclusive NOR) gate</option>
+    <option value="2nd-27">To make a burglar alarm using NAND gate</option>
+    <option value="2nd-28">To make a fire alarm using NOT gate</option>
+    <option value="2nd-29">To study the characteristics of a Geiger Muller counter</option>
+    <option value="2nd-30">To determine the high resistance by Neon flash lamp</option>
     </optgroup>
 
         </select>
@@ -421,6 +452,14 @@ Practical: ${document.getElementById("practical").value}`;
       alert("Please select a teacher.");
     }
   }
+</script>
+
+<script>
+new Choices('#practical', {
+  searchEnabled: true,
+  itemSelectText: '',
+  shouldSort: false
+});
 </script>
 
 </body>
