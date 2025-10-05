@@ -436,22 +436,25 @@ header {
     alert("Entry saved!");
   }
 
+// WHATSAPP INTEGRATION FUNCTION 
+
   function sendWhatsApp() {
-    const teacherNumber = document.getElementById("whatsapp").value;
-    const text = `Date: ${document.getElementById("date").value}
+  const teacherNumber = document.getElementById("whatsapp").value;
+  const text = `Date: ${document.getElementById("date").value}
 Day: ${document.getElementById("day").value}
 Time: ${document.getElementById("startTime").value} to ${document.getElementById("endTime").value}
 Class: ${document.getElementById("class").value}
 Section: ${document.getElementById("section").value}
-Practical: ${document.getElementById("practical").value}`;
+Practical: ${document.getElementById("practical").selectedOptions[0].text}`;
 
-    const encodedText = encodeURIComponent(text);
-    if (teacherNumber) {
-      window.open(`https://wa.me/92${teacherNumber}?text=${encodedText}`, '_blank');
-    } else {
-      alert("Please select a teacher.");
-    }
+  const encodedText = encodeURIComponent(text);
+  if (teacherNumber) {
+    window.open(`https://wa.me/92${teacherNumber}?text=${encodedText}`, '_blank');
+  } else {
+    alert("Please select a teacher.");
   }
+}
+
 </script>
 
 <script>
@@ -464,3 +467,4 @@ new Choices('#practical', {
 
 </body>
 </html>
+
